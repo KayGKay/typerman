@@ -14,11 +14,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 public class TyperManGame extends JPanel implements KeyListener, ActionListener {
-
+	//TyperManGame definition
 	
-	JTextField currentString;
+	JTextField currentString; 
 	JTextArea pointBox;
-	ArrayList<String> bank;
+	ArrayList<String> bank; 
+	/*An ArrayList is used here since it doesn't have a defined size and is allocated dynamically.
+	 * bank is used to store the dictionary words */
 	ArrayList<FallingWord> wordsOnBoard;
 	private int points;
 	private Timer time;
@@ -31,6 +33,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		bank = Dictionary.getWords("words.txt");
 		setBackground(Color.WHITE);
 		currentString = new JTextField("");
+		//Initializes field to type the words
 		currentString.addActionListener(new ActionListener () {
 
 			@Override
@@ -70,18 +73,26 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	
 	public void sendString() {
 		String entry = currentString.getText();
+		//Get the word typed by the user
 		currentString.setText("");
+		//Clears the field for user to type the next word
 		if(wordIsOnBoard(entry)) {
 			points = points + entry.length() + difficulty;
+			//Points are increased based on length of the word and the difficulty.
 			pointBox.setText(""+points);
+			//Update the points
 			removeWord(entry);
+			//Remove the word if successfully typed
 			updateUI();
+			//The UI is reset
 		}
 	}
 	
 	public boolean wordIsOnBoard(String entry) {
 		java.util.Iterator<FallingWord> it = wordsOnBoard.iterator();
+		//This object traverses a collection of objects one by one.
 		while(it.hasNext()) {
+			//Returns the next element
 			FallingWord current = it.next();
 			if(current.equals(entry)) {
 				return true;
@@ -95,10 +106,14 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		boolean found = false;
 		while(it.hasNext() && !found) {
 			FallingWord current = it.next();
-			if(current.equals(entry)) {
+			if(current.equals(entry))
+			//Checks if the current word is equal to the entered word
+			{
 				remove(current.box);
+				//If equal, it removes the word from the current iteration.
 				it.remove();
 				found = true;
+				//Reinitialized to true so that not all the words are removed.
 			}
 		}
 	}
