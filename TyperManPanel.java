@@ -1,7 +1,6 @@
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.FileNotFoundException;
-
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
