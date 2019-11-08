@@ -1,0 +1,26 @@
+#+TITLE: README
+#+AUTHOR: Amit Jena, K Gopal Krishna, Vedanta Nayak
+
+* About
+Typerman is a typing game that is meant to ease the process of learning
+touch-typing; a form of typing where the key location are subconsciously
+remembered and the person typing does not have to move their eyes away from the
+screen.
+
+* Working
+The words float down the window. The user must type the words exactly as they
+appear in order to earn points and make the word disappear before it falls to
+the bottom of the window. Once a word falls to the bottom of the window, the
+game ends.
+
+As points increase, so does the difficulty. The difficulty is in both the
+frequency of the words and the their length.
+
+* Scope of Improvement
+- A cleaner difficulty system which offers choice of difficulty
+- Saner user interface that allows:
+  - Custom backgrounds
+  - Pause game
+- A *Game Over* screen that offers two options:
+  - Restart Game
+  - Quit
