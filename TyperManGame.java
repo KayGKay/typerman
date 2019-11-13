@@ -19,6 +19,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 
 	JTextField currentString;
 	JTextArea pointBox;
+	JTextArea pauseBox;
 	ArrayList<String> bank;
 
 	/* An ArrayList is used here since it doesn't have a defined size and is
@@ -52,13 +53,21 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		currentString.setForeground(Color.white);
 		currentString.setFont(currentString.getFont().deriveFont(20f));
 
-		pointBox = new JTextArea("");
+		pointBox = new JTextArea("Points");
 		pointBox.setEditable(false);
-		pointBox.setSize(60,30);
-		pointBox.setBackground(Color.RED);
+		pointBox.setSize(40, 40);
+		pointBox.setBackground(Color.PINK);
 		pointBox.setForeground(Color.white);
-		pointBox.setLocation(150, 10);
+		pointBox.setLocation(360, 0);
 
+		pauseBox = new JTextArea("Pause");
+		pauseBox.setEditable(false);
+		pauseBox.setSize(60,30);
+		pauseBox.setBackground(Color.MAGENTA);
+		pauseBox.setForeground(Color.white);
+		pauseBox.setLocation(0, 10);
+
+		add(pauseBox);
 		add(pointBox);
 		add(currentString);
 		setVisible(true);
@@ -71,6 +80,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		currentTime = 0;
 		wordsOnBoard = new ArrayList<FallingWord>();
 		difficulty = 0;
+
 		time.start();
 	}
 
@@ -171,10 +181,10 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	}
 
 	private void makeNewWord() {
-			String randomWord = getRandomWord();
-			FallingWord newWord = new FallingWord(randomWord, difficulty + 1);
+		String randomWord = getRandomWord();
+		FallingWord newWord = new FallingWord(randomWord, difficulty + 1);
 
-			wordsOnBoard.add(newWord);
+		wordsOnBoard.add(newWord);
 	}
 
 	private void endGame() {
@@ -183,28 +193,34 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 
 	public boolean collison() {
 		java.util.Iterator<FallingWord> it = wordsOnBoard.iterator();
+
 		while(it.hasNext()) {
 			FallingWord current = it.next();
+
 			if(current.atBottom()) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
 
 	private void moveAllDown() {
 		java.util.Iterator<FallingWord> it = wordsOnBoard.iterator();
+
 		while(it.hasNext()) {
 			FallingWord current = it.next();
 			current.updateBox();
 		}
+
 		updateUI();
 	}
 
 	private String getRandomWord() {
 		Random ran = new Random();
 		int randomIndex = ran.nextInt(bank.size());
+
 		return bank.get(randomIndex);
 	}
 
@@ -255,11 +271,6 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 			} else {
 				return false;
 			}
-		}
-
-		@Override
-		public int hashCode() {
-			return word.hashCode();
 		}
 
 		public void updateBox() {

@@ -11,7 +11,6 @@ public class Dictionary {
         ;
     }
 
-
     public static ArrayList<String> getWords(String file) throws FileNotFoundException {
         Scanner input =  new Scanner(new File(file));
        
