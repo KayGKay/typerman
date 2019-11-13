@@ -16,25 +16,25 @@ import javax.swing.Timer;
 public class TyperManGame extends JPanel implements KeyListener, ActionListener {
 	/* A class that inherits JPanel and defines methods of KeyListener and
 	   ActionListener */
-	
-	JTextField currentString; 
+
+	JTextField currentString;
 	JTextArea pointBox;
 	ArrayList<String> bank;
 
 	/* An ArrayList is used here since it doesn't have a defined size and is
 	   allocated dynamically. bank is used to store the dictionary words */
-
 	ArrayList<FallingWord> wordsOnBoard;
+
 	private int points;
 	private Timer time;
 	private int currentTime;
 	private int difficulty;
-	
+
 	public TyperManGame() throws FileNotFoundException {
 		setSize(400,400);
 		setLayout(null);
 		bank = Dictionary.getWords("words.txt");
-		setBackground(Color.WHITE);
+		setBackground(Color.BLACK);
 		currentString = new JTextField("");
 
 		// Initializes field to type the words
@@ -50,22 +50,22 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		currentString.setBackground(Color.BLUE);
 		currentString.setEditable(true);
 		currentString.setForeground(Color.white);
-		currentString.setFont(currentString.getFont().deriveFont(20f)); 
-		
+		currentString.setFont(currentString.getFont().deriveFont(20f));
+
 		pointBox = new JTextArea("");
 		pointBox.setEditable(false);
 		pointBox.setSize(60,30);
 		pointBox.setBackground(Color.RED);
 		pointBox.setForeground(Color.white);
 		pointBox.setLocation(150, 10);
-		
+
 		add(pointBox);
 		add(currentString);
 		setVisible(true);
 		time = new Timer(100, this);
 		startNewGame();
 	}
-	
+
 	public void startNewGame() {
 		points = 0;
 		currentTime = 0;
@@ -73,14 +73,14 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		difficulty = 0;
 		time.start();
 	}
-	
+
 	public void sendString() {
 		// Get the word typed by the user
 		String entry = currentString.getText();
-		
+
 		// Clears the text field to allow the user to type further words
 		currentString.setText("");
-		
+
 		if(wordIsOnBoard(entry)) {
 			// Points are increased based on length of the word and the difficulty.
 			points = points + entry.length() + difficulty;
@@ -95,7 +95,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 			updateUI();
 		}
 	}
-	
+
 	public boolean wordIsOnBoard(String entry) {
 		// This object traverses a collection of objects one by one.
 		java.util.Iterator<FallingWord> it = wordsOnBoard.iterator();
@@ -125,7 +125,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 
 				// If equal, it removes the word from the current iteration.
 				it.remove();
-				
+
 				// Reinitialized to true so that not all the words are removed.
 				found = true;
 			}
@@ -136,18 +136,35 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	public void actionPerformed(ActionEvent arg0) {
 		currentTime++;
 		moveAllDown();
+
 		if(collison()) {
 			endGame();
 		}
+
 		adjustDifficulty();
 	}
-	
+
 	private void adjustDifficulty() {
-		int wordFrequency = 40 - (difficulty*2)/5+1;
-		if(wordFrequency < 4) {
-			wordFrequency = 4;
+		/* wordFrequency keeps decreasing as difficulty increases until it
+		  * reaches 9 when it is again set to 10. It does not make sense dropping
+		  * wordFrequency's value below 10 as the velocity of the falling words also
+		  * increases with time (difficulty). */
+		int wordFrequency = 40 - ((difficulty * 2) / 5);
+
+		/* The counter increases from 1 to wordFrequency and then, as soon as
+		 * currentTime is a multiple of wordFrequency, it resets to 0 and is
+		 * responsible for creation of a new word. */
+		int counter = currentTime % wordFrequency;
+
+		if(wordFrequency < 10) {
+			wordFrequency = 10;
 		}
-		if(currentTime % wordFrequency == 0) {
+
+		/* A new word is created (with increased velocity -- difficulty) as soon
+		 * as the counter resets to 0. This 0 value will increasingly recur,
+		 * causing increased rate of word creation as well as increased rate of
+		 * their descend. */
+		if(counter == 0) {
 			difficulty++;
 			makeNewWord();
 		}
@@ -155,7 +172,8 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 
 	private void makeNewWord() {
 			String randomWord = getRandomWord();
-			FallingWord newWord = new FallingWord(randomWord, 3);
+			FallingWord newWord = new FallingWord(randomWord, difficulty + 1);
+
 			wordsOnBoard.add(newWord);
 	}
 
@@ -194,7 +212,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	public void keyPressed(KeyEvent arg0) {
 		;
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		;
@@ -204,14 +222,14 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	public void keyTyped(KeyEvent key) {
 		;
 	}
-	
+
 	private class FallingWord {
 		private String word;
 		private JTextField box;
 		private int boxVel;
 		private int xLoc;
 		private int yLoc;
-		
+
 		public FallingWord(String word, int boxVel) {
 			Random ran = new Random();
 			xLoc = ran.nextInt(300);
@@ -220,7 +238,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 			this.boxVel = boxVel;
 			createBox();
 		}
-		
+
 		public boolean atBottom() {
 			if(yLoc >=340) {
 				return true;
@@ -238,12 +256,12 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 				return false;
 			}
 		}
-		
+
 		@Override
 		public int hashCode() {
 			return word.hashCode();
 		}
-		
+
 		public void updateBox() {
 			yLoc = yLoc + boxVel;
 			box.setLocation(xLoc, yLoc);
@@ -255,7 +273,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 				box.setBackground(Color.yellow);
 			}
 		}
-		
+
 		public void createBox() {
 			box = new JTextField(word);
 			box.setLocation(xLoc, yLoc);

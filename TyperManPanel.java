@@ -13,7 +13,7 @@ public class TyperManPanel extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		setLocation(gd.getDisplayMode().getWidth()/4,gd.getDisplayMode().getHeight()/4);
+		setLocation(gd.getDisplayMode().getWidth() / 4, gd.getDisplayMode().getHeight() / 4);
 		game = new TyperManGame();
 		setContentPane(game);
 	}
