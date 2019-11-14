@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 public class TyperManPanel extends JFrame {
-
 	private TyperManGame game;
 	
 	public TyperManPanel() throws FileNotFoundException {
@@ -17,7 +16,6 @@ public class TyperManPanel extends JFrame {
 		game = new TyperManGame();
 		setContentPane(game);
 	}
-	
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		new TyperManPanel();
