@@ -35,7 +35,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	private boolean timerstate;
 
 	public TyperManGame() throws FileNotFoundException {
-		setSize(400,400);
+		setSize(400, 400);
 		setLayout(null);
 		bank = Dictionary.getWords("words.txt");
 		setBackground(Color.BLACK);
@@ -101,11 +101,13 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	public void pauseGame() {
 		time.stop();
 		timerstate = false;
+		pauseBox.setText("Resume");
 	}
 
 	public void resumeGame() {
 		time.start();
 		timerstate = true;
+		pauseBox.setText("Pause");
 	}
 
 	public void sendString() {
