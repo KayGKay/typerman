@@ -198,8 +198,8 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 
 		/* A new word is created (with increased velocity -- difficulty) as soon
 		 * as the counter resets to 0. This 0 value will increasingly recur,
-		 * causing increased rate of word creation as well as increased rate of
-		 * their descend. */
+		 * causing an increased rate of word creation as well as an increased
+		 * rate of their descent. */
 		if(counter == 0) {
 			difficulty++;
 			makeNewWord();

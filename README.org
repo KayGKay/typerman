@@ -20,7 +20,7 @@ frequency of the words and the their length.
 - A cleaner difficulty system which offers choice of difficulty
 - Saner user interface that allows:
   - Custom backgrounds
-  - Pause game
-- A *Game Over* screen that offers two options:
-  - Restart Game
-  - Quit
+  - +Pause game+
+- +A *Game Over* screen that offers two options+:
+  - +Restart Game+
+  - +Quit+

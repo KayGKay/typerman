@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File ;
-import java.io.* ;
+import java.io.File;
+import java.io.*;
 
 public class End extends JFrame implements ActionListener {
     private Button quitButton;
