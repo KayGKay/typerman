@@ -3,6 +3,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,7 +21,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 
 	JTextField currentString;
 	JTextArea pointBox;
-	JTextArea pauseBox;
+	JTextField pauseBox;
 	ArrayList<String> bank;
 
 	/* An ArrayList is used here since it doesn't have a defined size and is
@@ -30,6 +32,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	private Timer time;
 	private int currentTime;
 	private int difficulty;
+	private boolean timerstate;
 
 	public TyperManGame() throws FileNotFoundException {
 		setSize(400,400);
@@ -60,7 +63,17 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		pointBox.setForeground(Color.white);
 		pointBox.setLocation(360, 0);
 
-		pauseBox = new JTextArea("Pause");
+		pauseBox = new JTextField("Pause");
+		pauseBox.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					if (timerstate == false) {
+						resumeGame();
+					} else if (timerstate == true) {
+						pauseGame();
+					}
+				}
+			});
+
 		pauseBox.setEditable(false);
 		pauseBox.setSize(60,30);
 		pauseBox.setBackground(Color.MAGENTA);
@@ -82,6 +95,17 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		difficulty = 0;
 
 		time.start();
+		timerstate = true;
+	}
+
+	public void pauseGame() {
+		time.stop();
+		timerstate = false;
+	}
+
+	public void resumeGame() {
+		time.start();
+		timerstate = true;
 	}
 
 	public void sendString() {
