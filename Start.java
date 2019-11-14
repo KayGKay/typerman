@@ -5,8 +5,7 @@ import java.io.File ;
 import java.io.* ;
 
 public class Start extends JFrame implements ActionListener {
-    private Button btn1;
-    private Button btn2;
+    private Button newGameButton;
 
     public Start() {
         try {
@@ -21,10 +20,12 @@ public class Start extends JFrame implements ActionListener {
         }
 
         setLayout(new FlowLayout());
-        btn1 = new Button("New Game");
-        btn1.addActionListener(this); //this refers to your current frame
-        add(btn1);
-        setTitle("Welcome to Typer-Man-Game");
+
+        newGameButton = new Button("New Game");
+        newGameButton.addActionListener(this); //this refers to your current frame
+        add(newGameButton);
+
+        setTitle("Welcome to TyperMan!");
         setSize(400, 400);
         setVisible(true);
     }

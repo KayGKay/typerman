@@ -5,8 +5,8 @@ import java.io.File ;
 import java.io.* ;
 
 public class End extends JFrame implements ActionListener {
-    private Button btn1;
-    private Button btn2;
+    private Button quitButton;
+    private Button restartButton;
 
     public End() {
         try {
@@ -21,19 +21,19 @@ public class End extends JFrame implements ActionListener {
         }
 
         setLayout(new FlowLayout());
-        btn1 = new Button("Quit Game");
-        btn1.addActionListener(new ActionListener() {
+        quitButton = new Button("Quit Game");
+        quitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
                 System.exit(0);
 			}
         });
 
-        btn2 = new Button("Restart Game");
-        btn2.addActionListener(this);
+        restartButton = new Button("Restart Game");
+        restartButton.addActionListener(this);
 
-        add(btn1);
-        add(btn2);
+        add(quitButton);
+        add(restartButton);
 
         setTitle("Game Over!");
         setSize(400, 400);
@@ -48,6 +48,7 @@ public class End extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent arg0) {
         try {
             TyperManPanel newgame = new TyperManPanel();
+
             this.setVisible(false);
             newgame.setVisible(true);
             this.dispose();
