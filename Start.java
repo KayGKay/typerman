@@ -10,7 +10,7 @@ public class Start extends JFrame implements ActionListener {
 
     public Start() {
         try {
-            final Image backgroundImage = javax.imageio.ImageIO.read(new File("new-game.jpg"));
+            final Image backgroundImage = javax.imageio.ImageIO.read(new File("bg.jpg"));
             setContentPane(new JPanel(new BorderLayout()) {
                     @Override public void paintComponent(Graphics g) {
                         g.drawImage(backgroundImage, 0, 0, null);
